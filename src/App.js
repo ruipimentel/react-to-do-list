@@ -8,9 +8,11 @@ import {
 
 import './App.css';
 import ToDoList from './components/ToDoList/ToDoList';
+import NovaTarefa from './components/NovaTarefa/NovaTarefa';
 
 function App() {
 
+  const [ ultimoId, setUltimoId ] = useState(3);
   const [ tarefas, setTarefas ] = useState([
     { id: 1, completada: true, texto: 'Tarefa A' },
     { id: 2, completada: false, texto: 'Tarefa B' },
@@ -31,6 +33,19 @@ function App() {
         }
       }),
     );
+  };
+
+  const addTarefa = (texto) => {
+    const novoId = ultimoId + 1;
+    setTarefas([
+      ...tarefas,
+      {
+        id: novoId,
+        completada: false,
+        texto
+      }
+    ]);
+    setUltimoId(novoId);
   };
 
   const deleteTarefa = (tarefa) => {
@@ -58,7 +73,9 @@ function App() {
             />
           </Route>
           <Route path="/nova-tarefa">
-            Nova tarefa
+            <NovaTarefa
+              addTarefa={addTarefa}
+            />
           </Route>
         </Switch>
       </main>
